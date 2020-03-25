@@ -1,0 +1,7 @@
+config LIBELF
+	bool "libelf: ELF access library"
+	default n
+	select LIBNOLIBC if !HAVE_LIBC
+	select LIBUKTIME if !HAVE_LIBC
+	help
+		libelf from ELF Tool Chain
