@@ -29,7 +29,9 @@
 #ifndef	__LIBELF_H_
 #define	__LIBELF_H_
 
+#if !defined(__Unikraft__)
 #include <sys/queue.h>
+#endif
 
 #include "_libelf_config.h"
 

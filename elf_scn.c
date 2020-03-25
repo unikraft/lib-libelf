@@ -24,7 +24,9 @@
  * SUCH DAMAGE.
  */
 
+#if !defined(__Unikraft__)
 #include <sys/queue.h>
+#endif
 
 #include <assert.h>
 #include <errno.h>

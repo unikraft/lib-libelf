@@ -83,11 +83,66 @@
 	    (var) = (tvar))
 #endif
 
+#ifndef	SLIST_HEAD
+#define	SLIST_HEAD(name, type)					\
+struct name {							\
+	struct type *slh_first;	/* first element */		\
+}
+#endif
+
+#ifndef	SLIST_ENTRY
+#define	SLIST_ENTRY(type)					\
+struct {							\
+	struct type *sle_next;	/* next element */		\
+}
+#endif
+
+#ifndef	SLIST_FIRST
+#define	SLIST_FIRST(head)	((head)->slh_first)
+#endif
+
+#ifndef	SLIST_NEXT
+#define	SLIST_NEXT(elm, field)	((elm)->field.sle_next)
+#endif
+
+#ifndef	SLIST_FOREACH
+#define	SLIST_FOREACH(var, head, field)				\
+	for ((var) = SLIST_FIRST((head));			\
+	    (var);						\
+	    (var) = SLIST_NEXT((var), field))
+#endif
+
 #ifndef	SLIST_FOREACH_SAFE
 #define	SLIST_FOREACH_SAFE(var, head, field, tvar)		\
 	for ((var) = SLIST_FIRST((head));			\
 	    (var) && ((tvar) = SLIST_NEXT((var), field), 1);	\
 	    (var) = (tvar))
+#endif
+
+#ifndef	SLIST_INIT
+#define	SLIST_INIT(head) do {					\
+	SLIST_FIRST((head)) = 0;				\
+} while (0)
+#endif
+
+#ifndef	SLIST_INSERT_AFTER
+#define	SLIST_INSERT_AFTER(slistelm, elm, field) do {			\
+	SLIST_NEXT((elm), field) = SLIST_NEXT((slistelm), field);	\
+	SLIST_NEXT((slistelm), field) = (elm);				\
+} while (0)
+#endif
+
+#ifndef	SLIST_INSERT_HEAD
+#define	SLIST_INSERT_HEAD(head, elm, field) do {		\
+	SLIST_NEXT((elm), field) = SLIST_FIRST((head));		\
+	SLIST_FIRST((head)) = (elm);				\
+} while (0)
+#endif
+
+#ifndef	SLIST_REMOVE_HEAD
+#define	SLIST_REMOVE_HEAD(head, field) do {				\
+	SLIST_FIRST((head)) = SLIST_NEXT(SLIST_FIRST((head)), field);	\
+} while (0)
 #endif
 
 #ifndef	STAILQ_CONCAT
