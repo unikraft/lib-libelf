@@ -181,3 +181,48 @@
 #endif
 
 #endif /* defined(__linux__) || defined(__GNU__) || defined(__GLIBC__) */
+
+/*
+ * Definitions for Unikraft.
+ */
+#if defined (__Unikraft__)
+
+#include <uk/config.h>
+
+/*
+ * Define LIBELF_{ARCH,BYTEORDER,CLASS} based on the machine architecture.
+ */
+#if (defined CONFIG_ARCH_X86_32)
+#define	LIBELF_CLASS		ELFCLASS32
+#define	LIBELF_ARCH		EM_386
+#define	LIBELF_BYTEORDER	ELFDATA2LSB
+
+#elif (defined CONFIG_ARCH_X86_64)
+#define	LIBELF_CLASS		ELFCLASS64
+#define	LIBELF_ARCH		EM_X86_64
+#define	LIBELF_BYTEORDER	ELFDATA2LSB
+
+#elif (defined CONFIG_ARCH_ARM_32)
+/* Little-Endian Arm */
+#define	LIBELF_CLASS		ELFCLASS32
+#define	LIBELF_ARCH		EM_ARM
+#define	LIBELF_BYTEORDER	ELFDATA2LSB
+
+#elif (defined CONFIG_ARCH_ARM_64)
+#define	LIBELF_CLASS		ELFCLASS64
+#define	LIBELF_ARCH		EM_AARCH64
+#define	LIBELF_BYTEORDER	ELFDATA2LSB
+
+#else
+#error  Missing elf-format definition for target architecture
+#endif
+
+#if	LIBELF_CLASS == ELFCLASS32
+#define	Elf_Note		Elf32_Nhdr
+#elif   LIBELF_CLASS == ELFCLASS64
+#define	Elf_Note		Elf64_Nhdr
+#else
+#error  LIBELF_CLASS needs to be one of ELFCLASS32 or ELFCLASS64
+#endif
+
+#endif /* defined(__Unikraft__) */

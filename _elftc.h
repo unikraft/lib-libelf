@@ -378,6 +378,14 @@ struct name {							\
 #endif	/* __GNUC__ */
 #endif
 
+#if defined(__Unikraft__)
+#if defined(__GNUC__)
+#define	ELFTC_VCSID(ID)		__asm__(".ident\t\"" ID "\"")
+#else
+#define	ELFTC_VCSID(ID)		/**/
+#endif	/* __GNUC__ */
+#endif
+
 #endif	/* ELFTC_VCSID */
 
 /*
@@ -417,6 +425,15 @@ extern const char *__progname;
 #define	ELFTC_GETPROGNAME()	__progname
 
 #endif	/* __OpenBSD__ */
+
+
+#if defined(__Unikraft__)
+
+#include <uk/config.h>
+
+#define	ELFTC_GETPROGNAME()	UK_IMAGE_NAME
+
+#endif	/* __Unikraft__ */
 
 #endif	/* ELFTC_GETPROGNAME */
 
@@ -535,5 +552,23 @@ extern const char *__progname;
 #define	roundup2	roundup
 
 #endif	/* __OpenBSD__ */
+
+#if defined(__Unikraft__)
+
+#include <uk/essentials.h>
+
+#define	ELFTC_BYTE_ORDER			__BYTE_ORDER
+#define	ELFTC_BYTE_ORDER_LITTLE_ENDIAN		__LITTLE_ENDIAN
+#define	ELFTC_BYTE_ORDER_BIG_ENDIAN		__BIG_ENDIAN
+
+#define	ELFTC_HAVE_MMAP				0
+#define	ELFTC_HAVE_STRMODE			0
+
+/* Whether we need to supply {be,le}32dec. */
+#define ELFTC_NEED_BYTEORDER_EXTENSIONS		0
+
+#define	roundup2	ALIGN_UP
+
+#endif	/* __Unikraft__ */
 
 #endif	/* _ELFTC_H */
