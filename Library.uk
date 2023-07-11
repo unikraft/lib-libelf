@@ -1,0 +1,4 @@
+name        := "libelf"
+description := "A library for managing program objects conforming to the ELF_ object format, and for managing DWARF_ debugging information in ELF objects."
+homepage    := "https://elftoolchain.sourceforge.io/"
+license     := "BSD-3-Clause"
