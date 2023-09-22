@@ -561,7 +561,11 @@ extern const char *__progname;
 #define	ELFTC_BYTE_ORDER_LITTLE_ENDIAN		__LITTLE_ENDIAN
 #define	ELFTC_BYTE_ORDER_BIG_ENDIAN		__BIG_ENDIAN
 
+#if CONFIG_LIBPOSIX_MMAP
+#define	ELFTC_HAVE_MMAP				1
+#else /* !CONFIG_LIBPOSIX_MMAP */
 #define	ELFTC_HAVE_MMAP				0
+#endif /* !CONFIG_LIBPOSIX_MMAP */
 #define	ELFTC_HAVE_STRMODE			0
 
 /* Whether we need to supply {be,le}32dec. */
