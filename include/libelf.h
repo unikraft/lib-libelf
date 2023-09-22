@@ -253,4 +253,6 @@ Elf_Data	*elf64_xlatetom(Elf_Data *_dst, const Elf_Data *_src,
 }
 #endif
 
+#include "../_libelf.h"
+
 #endif	/* _LIBELF_H_ */
