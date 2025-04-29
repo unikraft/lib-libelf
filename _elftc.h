@@ -38,7 +38,16 @@
 #endif
 
 #ifndef	offsetof
+#if defined(__Unikraft__)
+#include <uk/essentials.h>
+
+#define	offsetof(T, M)		__offsetof(T, M)
+
+#else /* !__Unikraft */
+
 #define	offsetof(T, M)		((int) &((T*) 0) -> M)
+
+#endif /* !__Unikraft */
 #endif
 
 /* --QUEUE-MACROS-- [[ */
